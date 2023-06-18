@@ -20,9 +20,10 @@ import { Card } from '../components/card';
 import { StatusBar } from 'expo-status-bar';
 import { Persona } from '../components/persona';
 import { PastorData } from '../constants/data';
+import { Destaques } from '../components/destaques';
 
 
-export function Home(){
+export function Home({navigation}){
   const [searchText, setSearchText] = useState('');
   const [filteredPersonas, setFilteredPersonas] = useState([]);
 
@@ -45,9 +46,9 @@ export function Home(){
   
 
   return (
-    <SafeAreaView style={{marginTop:50}}>
+    <SafeAreaView style={{marginTop:38, backgroundColor: '#ffffff'}}>
         <StatusBar backgroundColor='#ffffff' style='dark'/>
-        <View style={{marginLeft: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{marginTop: 20,marginLeft: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
             <View  style={{height: 60, width: 60, borderRadius: 30, backgroundColor: '#3a5ec2', alignItems: 'center', justifyContent: 'center'}}>
                 <Feather name="user" size={30} color="white" />
             </View>
@@ -64,8 +65,10 @@ export function Home(){
             </TouchableOpacity>
         </View>
 
+
         <Card />
-    
+
+   
         <Persona data={searchText === '' ? PastorData : filteredPersonas} />
 
 
