@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   View,
@@ -9,6 +9,9 @@ import {
   ScrollView,
   Image
 } from 'react-native';
+import axios from 'axios';
+
+
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -21,19 +24,32 @@ import { StatusBar } from 'expo-status-bar';
 import { Persona } from '../components/persona';
 import { PastorData } from '../constants/data';
 import { Destaques } from '../components/destaques';
+import { fetchData } from '../constants/fetchData';
 
 
 export function Home({navigation}){
   const [searchText, setSearchText] = useState('');
   const [filteredPersonas, setFilteredPersonas] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchPastors();
+  }, []);
+
+  const fetchPastors = async () => {
+    const parsedData = await fetchData();
+    setData(parsedData);
+  };
+
+  
 
   const handleSearch = (text) => {
     setSearchText(text);
   
     if (text === '') {
-      setFilteredPersonas(PastorData);
+      setFilteredPersonas(data);
     } else {
-      const filteredData = PastorData.filter(
+      const filteredData = data.filter(
         (item) =>
           item.name.toLowerCase().includes(text.toLowerCase()) ||
           item.ministerio.toLowerCase().includes(text.toLowerCase()) ||
@@ -43,7 +59,9 @@ export function Home({navigation}){
       setFilteredPersonas(filteredData);
     }
   };  
+
   
+
 
   return (
     <SafeAreaView style={{marginTop:38, backgroundColor: '#ffffff'}}>
@@ -69,7 +87,7 @@ export function Home({navigation}){
         <Card />
 
    
-        <Persona data={searchText === '' ? PastorData : filteredPersonas} />
+        <Persona data={searchText === '' ? data : filteredPersonas} />
 
 
     </SafeAreaView>
