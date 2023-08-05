@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-export const fetchData = async () => {
+export const fetchSecondTable = async () => {
   try {
     const response = await axios.get(
-      'https://docs.google.com/spreadsheets/u/7/d/e/2PACX-1vTyyydtJrKtGhm8MvW5jqdBVPAAEScubua9P9Vx-_rgWEVNOonOQ5Q_KwAKWXh_7Z-_4XpEusWT4_s5/pubhtml'
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgly7shTc5-1NWdvyJMPz3QkEATxY2GE6PTOYyzzdQ4-Chy-iPd93a9CiGDmNjyHlIMizQsg69VNF0/pubhtml'
     );
 
     const html = response.data;
     const cheerio = require('cheerio');
     const $ = cheerio.load(html);
 
-    const rows = $('table tr').toArray();
+    const rows = $('table tr').toArray()
     const parsedData = [];
     let skipFirstRow = true;
 
@@ -18,14 +18,9 @@ export const fetchData = async () => {
       const columns = $(row).find('td').toArray();
       const rowData = {
         id: $(columns[0]).text(),
-        name: $(columns[1]).text(),
-        cargo: $(columns[2]).text(),
-        ministerio: $(columns[3]).text(),
-        categoria: $(columns[4]).text(),
-        destaque: $(columns[5]).text(),
-        number: $(columns[6]).text(),
-        photo: $(columns[7]).text(),
-        heartFilled: false,
+        nome: $(columns[1]).text(),
+        agenda: $(columns[2]).text(),
+        location: $(columns[3]).text(),
       };
 
       if (skipFirstRow) {

@@ -36,7 +36,8 @@ export function Destaques({ pastores }) {
         name: item.name,
         cargo: item.cargo,
         ministerio: item.ministerio,
-        photo: item.photo
+        photo: item.photo,
+        number: item.number
     })}>
        {renderImage(item.photo)}
       <Text style={{fontWeight: 'bold'}}>{item.cargo}</Text>
